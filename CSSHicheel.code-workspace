@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "../CSSHicheel"
+	},
+	{
+		"path": "."
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "htmlHicheel"
+  }
+}
