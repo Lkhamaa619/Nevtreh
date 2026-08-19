@@ -1,13 +1,85 @@
 // ===== Data =====
 const SKILLS = [
-  { n: "01", name: "HTML", desc: "Structuring pages with semantic tags, links, and images.", xp: 100 },
-  { n: "02", name: "CSS", desc: "Styling with colors, layout, and responsive design.", xp: 95 },
-  { n: "03", name: "Tailwind CSS", desc: "Building UIs fast with utility-first classes.", xp: 85 },
-  { n: "04", name: "JavaScript", desc: "Adding interactivity, logic, and dynamic behavior.", xp: 80 },
-  { n: "05", name: "Next.js", desc: "A React framework for modern full-stack web apps.", xp: 70 },
-  { n: "06", name: "Terminal", desc: "Controlling projects from the command line.", xp: 75 },
-  { n: "07", name: "GitHub", desc: "Version control and collaborating on code.", xp: 85 },
-  { n: "08", name: "Vercel", desc: "Deploying and hosting websites live on the web.", xp: 90 },
+  {
+    n: "01", name: "HTML", id: "html", tag: "structure", xp: 100,
+    desc: "The skeleton of every web page — semantic tags, links, and images.",
+    learned: [
+      "Semantic tags: header, main, section, footer",
+      "Links, lists, images with alt text",
+      "Forms, inputs, and buttons",
+    ],
+    example: '<main>\n  <h1>Hello world</h1>\n  <a href="menu.html">Our site</a>\n</main>',
+  },
+  {
+    n: "02", name: "CSS", id: "css", tag: "style", xp: 95,
+    desc: "The paint and layout — colors, spacing, and responsive design.",
+    learned: [
+      "Colors, fonts, borders & shadows",
+      "Flexbox for centering and layout",
+      "Media queries for mobile screens",
+    ],
+    example: ".btn {\n  display: flex;\n  background: #00e5ff;\n  border-radius: 8px;\n}",
+  },
+  {
+    n: "03", name: "Tailwind CSS", id: "tailwind", tag: "style", xp: 85,
+    desc: "Styling at lightning speed using utility classes in the HTML.",
+    learned: [
+      "Utility-first classes (flex, p-4, text-xl)",
+      "Responsive prefixes (md:, lg:)",
+      "Building UI without writing CSS files",
+    ],
+    example: '<button class="flex px-4 py-2 rounded-lg bg-cyan-400">\n  Click me\n</button>',
+  },
+  {
+    n: "04", name: "JavaScript", id: "javascript", tag: "logic", xp: 80,
+    desc: "The brain — interactivity, logic, and things that react to clicks.",
+    learned: [
+      "Variables, functions & conditions",
+      "Selecting and changing the DOM",
+      "Event listeners (click, submit, keypress)",
+    ],
+    example: "const btn = document.querySelector('button');\nbtn.addEventListener('click', () => {\n  alert('It works!');\n});",
+  },
+  {
+    n: "05", name: "Next.js", id: "nextjs", tag: "framework", xp: 70,
+    desc: "A React framework for building fast, modern full-stack web apps.",
+    learned: [
+      "Pages and file-based routing",
+      "Reusable React components",
+      "Building real multi-page apps",
+    ],
+    example: "export default function Page() {\n  return <h1>Welcome!</h1>;\n}",
+  },
+  {
+    n: "06", name: "Terminal", id: "terminal", tag: "tools", xp: 75,
+    desc: "Talking to the computer with commands instead of clicks.",
+    learned: [
+      "Moving around: cd, ls, mkdir",
+      "Running dev servers & scripts",
+      "Installing packages with npm",
+    ],
+    example: "$ cd my-site\n$ npm run dev\n$ git status",
+  },
+  {
+    n: "07", name: "GitHub", id: "github", tag: "tools", xp: 85,
+    desc: "Saving versions of code and building together as a team.",
+    learned: [
+      "commit, push & pull",
+      "Branches for safe changes",
+      "Collaborating on one project",
+    ],
+    example: "$ git add .\n$ git commit -m 'add homepage'\n$ git push",
+  },
+  {
+    n: "08", name: "Vercel", id: "vercel", tag: "deploy", xp: 90,
+    desc: "Sending the website live so anyone in the world can visit it.",
+    learned: [
+      "Connecting a GitHub repo",
+      "One-click deploys",
+      "Getting a live URL to share",
+    ],
+    example: "$ vercel deploy\n> https://my-site.vercel.app  [live]",
+  },
 ];
 
 const SOFT = [
@@ -64,8 +136,12 @@ function buildCards() {
         <span class="num">SKILL_${s.n}</span>
         <span class="badge">unlocked</span>
       </div>
-      <h3>${s.name}</h3>
+      <h3>${s.name} <span class="tag">${s.tag}</span></h3>
       <p>${s.desc}</p>
+      <ul class="learned">
+        ${s.learned.map((l) => `<li>${escapeHtml(l)}</li>`).join("")}
+      </ul>
+      <pre class="snippet"><code>${escapeHtml(s.example)}</code></pre>
       <div class="xp"><span data-xp="${s.xp}"></span></div>
     </article>`
   ).join("");
@@ -109,6 +185,7 @@ const COMMANDS = {
       "res",
       "available commands:\n" +
         "  skills       list every technology I learned\n" +
+        "  <skill>      details on one skill (e.g. html, css, nextjs)\n" +
         "  about        who I am\n" +
         "  whoami       short version\n" +
         "  run website  open the site my team built\n" +
@@ -121,6 +198,7 @@ const COMMANDS = {
     SKILLS.forEach((s) =>
       printLine("res", `  ${s.n}  ${s.name.padEnd(14)} ${"█".repeat(Math.round(s.xp / 10))} ${s.xp}%`)
     );
+    printLine("res", "\ntip: type a name like 'html' or 'nextjs' for the full breakdown.");
   },
   about() {
     printLine(
@@ -154,11 +232,25 @@ function runCommand(raw) {
     window.location.href = "index.html";
     return;
   }
+  const skill = SKILLS.find((s) => s.id === cmd || s.name.toLowerCase() === cmd);
+  if (skill) {
+    printSkill(skill);
+    return;
+  }
   if (COMMANDS[cmd]) {
     COMMANDS[cmd]();
   } else {
     printLine("warn", `command not found: ${escapeHtml(cmd)} — try 'help'`);
   }
+}
+
+function printSkill(s) {
+  printLine("accent", `// ${s.name}  [${s.tag}]  —  ${s.xp}% xp`);
+  printLine("res", "  " + s.desc);
+  printLine("res", "\n  what I learned:");
+  s.learned.forEach((l) => printLine("res", "    - " + escapeHtml(l)));
+  printLine("res", "\n  example:");
+  s.example.split("\n").forEach((l) => printLine("code", "    " + escapeHtml(l)));
 }
 
 function escapeHtml(str) {
