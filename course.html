@@ -3,113 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teen Coder Course — Recap</title>
+    <title>teen_coder.os — Lkhamdolgor</title>
+    <meta
+      name="description"
+      content="An interactive terminal recap of everything Lkhamdolgor learned during the Teen Coder Course."
+    />
     <link rel="stylesheet" href="course.css" />
   </head>
   <body>
-    <!-- HERO -->
-    <header class="hero">
-      <span class="tag">Teen Coder Course</span>
-      <h1>Everything I <span class="glow">learned</span> to code.</h1>
-      <p class="intro">
-        A recap of the technologies, tools, and skills I picked up during the
-        Teen Coder Course — from writing my first line of HTML to shipping a
-        real website on the web.
-      </p>
-      <p class="name-line">&gt; built by Lkhamdolgor // teen coder</p>
-    </header>
+    <div class="scanlines" aria-hidden="true"></div>
 
-    <!-- TECH SKILLS -->
-    <section class="block">
-      <h2 class="section-title">Technologies I learned</h2>
-      <p class="section-sub">
-        The core web development stack, from markup to deployment.
-      </p>
+    <!-- BOOT SEQUENCE -->
+    <div id="boot" class="boot">
+      <pre id="boot-log" class="boot-log" aria-hidden="true"></pre>
+    </div>
 
-      <div class="grid">
-        <article class="card">
-          <span class="num">01</span>
-          <h3>HTML</h3>
-          <p>Structuring web pages with semantic tags, links, and images.</p>
-        </article>
+    <!-- MAIN OS SHELL -->
+    <main id="os" class="os" hidden>
+      <div class="window">
+        <div class="titlebar">
+          <span class="dots" aria-hidden="true">
+            <i class="dot red"></i><i class="dot yellow"></i><i class="dot green"></i>
+          </span>
+          <span class="title">lkhamdolgor@teen-coder: ~</span>
+          <span class="status"><i class="live"></i> online</span>
+        </div>
 
-        <article class="card">
-          <span class="num">02</span>
-          <h3>CSS</h3>
-          <p>Styling pages with colors, layout, and responsive design.</p>
-        </article>
+        <div class="screen">
+          <!-- HERO -->
+          <header class="hero">
+            <h1 class="ascii" aria-label="teen coder OS">
+teen_coder<span class="glow">.os</span></h1>
+            <p class="intro">
+              &gt; A recap of everything <strong>Lkhamdolgor</strong> learned during the
+              Teen Coder Course — from the first line of HTML to shipping a real
+              website live on the web.
+            </p>
+            <p class="hint">
+              Type a command below and hit <kbd>Enter</kbd>. Try
+              <button class="cmd-chip" data-cmd="help">help</button>
+              <button class="cmd-chip" data-cmd="skills">skills</button>
+              <button class="cmd-chip" data-cmd="about">about</button>
+            </p>
+          </header>
 
-        <article class="card">
-          <span class="num">03</span>
-          <h3>Tailwind CSS</h3>
-          <p>Building interfaces fast with utility-first CSS classes.</p>
-        </article>
+          <!-- INTERACTIVE TERMINAL OUTPUT -->
+          <section class="terminal" aria-label="Interactive terminal">
+            <div id="output" class="output" role="log" aria-live="polite"></div>
+            <form id="prompt-form" class="prompt-line" autocomplete="off">
+              <label for="cmd" class="ps1">lkhamdolgor@teen-coder:~$</label>
+              <input
+                id="cmd"
+                class="cmd-input"
+                type="text"
+                name="cmd"
+                aria-label="Terminal command input"
+                spellcheck="false"
+                autocapitalize="off"
+              />
+              <span class="caret" aria-hidden="true"></span>
+            </form>
+          </section>
 
-        <article class="card">
-          <span class="num">04</span>
-          <h3>JavaScript</h3>
-          <p>Adding interactivity, logic, and dynamic behavior to sites.</p>
-        </article>
+          <!-- SKILLS AS ACHIEVEMENTS -->
+          <section id="skills-panel" class="panel">
+            <h2 class="panel-title">// skills unlocked</h2>
+            <p class="panel-sub">8 / 8 technologies mastered during the course.</p>
+            <div class="grid" id="skill-grid"></div>
+          </section>
 
-        <article class="card">
-          <span class="num">05</span>
-          <h3>Next.js</h3>
-          <p>A React framework for building modern full-stack web apps.</p>
-        </article>
+          <!-- BEYOND CODE -->
+          <section class="panel">
+            <h2 class="panel-title">// beyond the code</h2>
+            <p class="panel-sub">The stuff that made it more than just typing.</p>
+            <div class="soft" id="soft-grid"></div>
+          </section>
 
-        <article class="card">
-          <span class="num">06</span>
-          <h3>Terminal Commands</h3>
-          <p>Navigating and controlling projects from the command line.</p>
-        </article>
-
-        <article class="card">
-          <span class="num">07</span>
-          <h3>GitHub</h3>
-          <p>Version control and collaborating on code with others.</p>
-        </article>
-
-        <article class="card">
-          <span class="num">08</span>
-          <h3>Vercel</h3>
-          <p>Deploying and hosting websites live on the internet.</p>
-        </article>
+          <footer class="site">
+            <p>&gt; process finished with exit code 0 // Teen Coder Course</p>
+            <p class="links">
+              <a href="index.html">home</a> ·
+              <a href="menu.html">our website</a>
+            </p>
+          </footer>
+        </div>
       </div>
-    </section>
+    </main>
 
-    <!-- SOFT SKILLS -->
-    <section class="block">
-      <h2 class="section-title">Beyond the code</h2>
-      <p class="section-sub">Skills that made the whole thing more fun.</p>
-
-      <div class="soft">
-        <article class="card">
-          <h3>Teamwork</h3>
-          <p>Working together, sharing ideas, and building projects as a group.</p>
-        </article>
-
-        <article class="card">
-          <h3>Playing Games</h3>
-          <p>Learning and taking breaks by playing games with the class.</p>
-        </article>
-
-        <article class="card">
-          <h3>We Built a Website</h3>
-          <p>
-            Our team created and launched a real website together during the
-            course.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="site">
-      <p>&gt; end of recap // Teen Coder Course</p>
-      <p style="margin-top: 8px">
-        <a href="index.html">home</a> &nbsp;·&nbsp;
-        <a href="menu.html">our website</a>
-      </p>
-    </footer>
+    <script src="course.js" defer></script>
   </body>
 </html>
